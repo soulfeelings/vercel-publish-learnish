@@ -168,6 +168,9 @@ function addUserToFile(userString) {
 
 function getUsersFromFile() {
     const usersFromFile = usersDB;
+    if (!usersFromFile) {
+        return [];
+    }
     return usersFromFile.split('\n').map((raw) => {
         const arrayOfUser = raw.split(' ');
         const nick = arrayOfUser[0];
@@ -181,6 +184,7 @@ function getUsersFromFile() {
 
 function checkUserInFile(phone) {
     const usersFromFile = getUsersFromFile();
+    console.log(usersFromFile)
     return usersFromFile.find((user) => {
         return user.phone === phone;
     });
@@ -231,8 +235,8 @@ function getMessagesByPhone(our, his) {
 function saveMessageToFile(msg) {
     const messages = messagesDB;
     if (!messages) {
-        fs.writeFileSync(fileName, msg)
+        messagesDB = msg
     } else {
-        fs.writeFileSync(fileName, messages + "\n" + msg)
+        messagesDB = messages + "\n" + msg
     }
 }
